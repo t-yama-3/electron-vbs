@@ -34,57 +34,25 @@ app.on('window-all-closed', () => {
 })
 
 //メール送信コントロール
-ipcMain.on('mailer', function(event, args="pxbdg597@ybb.ne.jp"){
-  // WScript.Echo("ネットワーク プリンタ割り当て :");
+ipcMain.on('mailer', function(event, args){
+  //実行するVBSファイルのパス
+  var fullpath = './vbs/mailer.vbs';
 
-  // //デスクトップのパスを指定
-  // var dir_home = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
-  // var dir_desktop = require("path").join(dir_home, "Desktop");
-
-  //実行するVBSファイルの名前
-  var filename = "/mailer.vbs";
-
-  //実行パスを構築する
-  var fullpath = './vbs' + filename;
-  //実行パスを構築する
-  // var fullpath = "C:\\Users\\t-yam\\mailer.vbs";
-
-  console.log(fullpath);
-
-  //コマンドラインを構築
-  var ret = vbsCommand(fullpath, args);
-
-  console.log('tttt')
-
-  //返り値により処理を分岐
-  if(ret == 0){
-    //メッセージを表示
-    //メッセージオプション
-    var options ={
-      type:'info',
-      title:"通知",
-      button:['OK'],
-      message:'メール送信完了',
-      detail:'メールは無事に' + args + "へ送信されました。"
-    }
-
-    //表示する
-    dialog.showMessageBox(null,options);
-  }else{
-  	//エラーが発生しているので、なにか処理をする
-  	console.log("error:" + ret + "みたいですよ。");
-  }
-});
-
-//外部コマンドを実行する
-function vbsCommand(fullpath, address) {
-  console.log('rrrr')
-  //コマンドを組み立てて実行
-  var child = spawnSync('cscript.exe', [fullpath, address]);
+  // VBS に処理を渡す
+  var child = spawnSync('cscript.exe', [fullpath, args]);
 
   //返り値を取得する(status)
   var ret = child.status;
 
-  //retを返す
-  return ret;
-}
+  if (ret === 0) {
+    dialog.showMessageBox({
+      type: 'info',
+      title: '通知',
+      message: 'メール送信完了',
+      detail: 'メール送信完了です',
+      button:['OK'],
+    })
+  } else {
+    console.log('error!')
+  }
+});
