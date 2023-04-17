@@ -9,9 +9,8 @@ contextBridge.exposeInMainWorld('versions', {
 
 window.addEventListener('DOMContentLoaded', () => {
   const element = document.getElementById('saveman')
-  console.log('kokomade!')
   element.addEventListener('click', () => {
-    console.log('aaa')
-    ipcRenderer.send('mailer');
+    const mail = document.getElementById('mail').value
+    ipcRenderer.send('mailer', mail);
   })
 })
