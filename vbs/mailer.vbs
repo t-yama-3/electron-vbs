@@ -1,37 +1,30 @@
-msgbox WScript.Arguments(0) & "ã•ã‚“ã¸ãƒ¡ãƒ¼ãƒ«é€ä¿¡"
+'•Ï”‚ğéŒ¾‚µAˆø”iƒƒAƒhj‚ğæ“¾‚·‚é
+Dim args: args = WScript.Arguments(0)
+dim status: status = 0
 
-'å¤‰æ•°ã‚’å®£è¨€ã—ã€å¼•æ•°ï¼ˆãƒ¡ã‚¢ãƒ‰ï¼‰ã‚’å–å¾—ã™ã‚‹
-' Dim args: args = "pxbdg597@ybb.ne.jp"
-' Dim args: args = WScript.Arguments(0)
-' Dim status: status = 0
+'ƒGƒ‰[”­¶‚Éˆ—‚ğŒp‘±
+On Error Resume Next
 
-' 'ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿæ™‚ã«å‡¦ç†ã‚’ç¶™ç¶š
-' On Error Resume Next
+'ˆø”Šm”F
+msgbox args & "‚³‚ñ‚Öƒ[ƒ‹‘—M"
 
-' ' WScript.Echo("ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ ãƒ—ãƒªãƒ³ã‚¿å‰²ã‚Šå½“ã¦ :");
+'OutlookƒIƒuƒWƒFƒNƒg‚ğ—pˆÓ
+Set appOutlook = CreateObject("Outlook.Application")
+Set objMailItem = appOutlook.CreateItem(olMailItem)
 
-'å¼•æ•°ç¢ºèª
-' msgbox args & "ã•ã‚“ã¸ãƒ¡ãƒ¼ãƒ«é€ä¿¡"
+with objMailItem
+	.Recipients.Add args
+	.Subject = "‚±‚ê‚ÍƒeƒXƒgƒ[ƒ‹‚Å‚·‚æ"
+	.Body = "ƒ[ƒ‹‚Ì–{•¶‚Å‚·B"
+	'.Attachments.Add "c:test.csv"
+	.Send
+end with
 
-' msgbox "Hello, World!!!!!!!!!"
+On Error Goto 0
 
-' 'Outlookã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”¨æ„
-' Set appOutlook = CreateObject("Outlook.Application")
-' Set objMailItem = appOutlook.CreateItem(olMailItem)
+'I—¹ˆ—
+set appOutlook = nothing
+set objMailItem = nothing
 
-' with objMailItem
-' 	.Recipients.Add args
-' 	.Subject = "ã“ã‚Œã¯ãƒ†ã‚¹ãƒˆãƒ¡ãƒ¼ãƒ«ã§ã™ã‚ˆ"
-' 	.Body = "ãƒ¡ãƒ¼ãƒ«ã®æœ¬æ–‡ã§ã™ã€‚"
-' 	'.Attachments.Add "c:test.csv"
-' 	.Send
-' end with
-
-' On Error Goto 0
-
-' 'çµ‚äº†å‡¦ç†
-' set appOutlook = nothing
-' set objMailItem = nothing
-
-' 'ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’è¿”ã™
-' WScript.Quit status
+'ƒXƒe[ƒ^ƒX‚ğ•Ô‚·
+WScript.Quit status
