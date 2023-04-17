@@ -1,0 +1,14 @@
+{
+  "name": "electron-vbs",
+  "version": "1.0.0",
+  "description": "\"Electron VBS\"",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "t-yama-3",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^24.1.2"
+  }
+}
