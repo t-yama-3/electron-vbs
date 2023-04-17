@@ -4,6 +4,7 @@
   "description": "\"Electron VBS\"",
   "main": "main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "t-yama-3",
