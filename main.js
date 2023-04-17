@@ -1,12 +1,8 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
 const fs = require('fs');
-
-//vbs実行用（同期的にexe実行を行う）
-var spawnSync = require('child_process').spawnSync;
-
-// メインウィンドウはグローバル宣言
-let mainWindow = null;
+/** vbs実行用（同期的にexe実行を行う）*/
+const { spawnSync } = require('child_process')
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -33,17 +29,23 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
 
-//メール送信コントロール
+/** メール送信コントロール */
 ipcMain.on('mailer', function(event, args){
-  //実行するVBSファイルのパス
-  var fullpath = './vbs/mailer.vbs';
 
-  // VBS に処理を渡す
+  /** VBSファイルのディレクトリ（コンパイル後か否かで変える） */
+  let dir = './resources/app/vbs'
+  if (!fs.existsSync(dir)) dir = './vbs'
+
+  /** 実行するVBSファイルのパス */
+  var fullpath = `${dir}/mailer.vbs`;
+
+  /** VBS に処理を渡す */
   var child = spawnSync('cscript.exe', [fullpath, args]);
 
-  //返り値を取得する(status)
+  /** 戻り値を取得する(status) */
   var ret = child.status;
 
+  /** 戻り値の確認 */
   if (ret === 0) {
     dialog.showMessageBox({
       type: 'info',
