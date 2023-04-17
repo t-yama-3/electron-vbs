@@ -6,3 +6,12 @@ contextBridge.exposeInMainWorld('versions', {
   electron: () => process.versions.electron,
   ping: () => ipcRenderer.invoke('ping')
 })
+
+window.addEventListener('DOMContentLoaded', () => {
+  const element = document.getElementById('saveman')
+  console.log('kokomade!')
+  element.addEventListener('click', () => {
+    console.log('aaa')
+    ipcRenderer.send('mailer');
+  })
+})

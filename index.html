@@ -10,12 +10,49 @@
       http-equiv="X-Content-Security-Policy"
       content="default-src 'self'; script-src 'self'"
     />
+    <script>
+      var $ = jQuery = require("jquery")
+    </script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <script>
+      // IPC通信を行う
+      var ipcRenderer = require('electron').ipcRenderer;
+	  
+      //セッティング項目を保存する
+      function savesetting(){
+        //メールアドレスを取得
+        var mail = document.getElementById("mail").value;
+
+        //メインプロセスに処理を送る
+        ipcRenderer.send('mailer', mail);
+      }
+    </script>
     <title>Hello from Electron renderer!</title>
   </head>
   <body>
     <h1>Hello from Electron renderer!</h1>
     <p>👋</p>
     <p id="info"></p>
+      <!-- セッティング項目を表示　-->
+      <form class="contact_form" action="#" method="post" name="contact_form">
+        <ul>
+          <li>
+            <h2>VBSでメール送信</h2>
+            <span class="required_notification">*印は、必須入力項目です</span>
+          </li>
+          <li>
+            <label for="name">メールアドレス</label>
+            <input type="text"  placeholder="kinoko@test.com" style="width:150px" id="mail" required />
+            <span class="form_hint">メールアドレスを入力</span>
+          </li>
+        </ul>
+    </form>
+
+    <p>
+      <button id="saveman" class="action" title='設定を保存する'>送信</button>
+      <!-- <button onClick='savesetting()' id="saveman" class="action" title='設定を保存する'>送信</button> -->
+    </p>  
   </body>
   <script src="./renderer.js"></script>
 </html>
